@@ -58,17 +58,20 @@ export function createScene(renderer/*: WebGLRenderer*/, callback = null) {
     Glb3dModel = gltf.scene.children[0];
     console.log('models loading completed.!', Glb3dModel)
     stopPreloadAnimation();
+    hidePercentage()
+    document.body.appendChild(
+      ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] }),
+    );
     }, function (xhr) {
       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-      const text = '3d Model downloading : ' + (xhr.loaded / xhr.total * 100).toFixed(0) + ' %'
+      let text = ''
+      if (xhr.loaded && xhr.total) {
+        text = '3d Model downloading : ' + (xhr.loaded / xhr.total * 100).toFixed(0) + ' %'
+      } else {
+        text = '3d Model downloading';
+      }
       showPercentage()
       updatePercentage(text)
-      if ( (xhr.loaded / xhr.total * 100) >= 100 ) {
-        hidePercentage()
-        document.body.appendChild(
-          ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] }),
-        );
-      }
     },
     // called when loading has errors
     function (error) {
