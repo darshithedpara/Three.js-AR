@@ -46,6 +46,7 @@ export function displayUnsupportedBrowserMessage()/*: void*/ {
 
   if (appRoot) {
     appRoot.appendChild(helpMessage);
+    stopPreloadAnimation()
   }
 }
 
